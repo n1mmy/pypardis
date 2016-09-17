@@ -22,9 +22,13 @@ def median_search_split(partition, axis, next_part):
     """
     sorted_values = partition.map(lambda ((k, p), v): v[axis]).sortBy(
         lambda v: v).collect()
-    if len(sorted_values) > 0:
+    if len(sorted_values) > 2:
         median = sorted_values[
             len(sorted_values) / 2]  # need a better way to find the median
+    elif len(sorted_values) == 2:
+        median = (sorted_values[1] - sorted_values[0]) / 2
+    elif len(sorted_values) == 1:
+        median = sorted_values[0]
     else:
         median = 0 # XXX
     part1 = partition.filter(lambda ((k, p), v): v[axis] < median)
