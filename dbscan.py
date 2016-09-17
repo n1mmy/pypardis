@@ -93,7 +93,7 @@ class DBSCAN(object):
         self.min_samples = int(min_samples)
         self.metric = metric
         self.max_partitions = max_partitions
-        self.split_method = None
+        self.split_method = split_method
         self.data = None
         self.result = None
         self.bounding_boxes = None
