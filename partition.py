@@ -20,17 +20,20 @@ def median_search_split(partition, axis, next_part):
     Split the given partition into equal sized partitions along the
     given axis.
     """
-    sorted_values = partition.map(lambda ((k, p), v): v[axis]).sortBy(
-        lambda v: v).collect()
-    if len(sorted_values) > 2:
-        median = sorted_values[
-            len(sorted_values) / 2]  # need a better way to find the median
-    elif len(sorted_values) == 2:
-        median = (sorted_values[1] - sorted_values[0]) / 2
-    elif len(sorted_values) == 1:
-        median = sorted_values[0]
-    else:
-        median = 0 # XXX
+    # sorted_values = partition.map(lambda ((k, p), v): v[axis]).sortBy(
+    #     lambda v: v).collect()
+    # if len(sorted_values) > 2:
+    #     median = sorted_values[
+    #         len(sorted_values) / 2]  # need a better way to find the median
+    # elif len(sorted_values) == 2:
+    #     median = (sorted_values[1] - sorted_values[0]) / 2
+    # elif len(sorted_values) == 1:
+    #     median = sorted_values[0]
+    # else:
+    #     median = 0 # XXX
+
+    median = 0.5
+
     part1 = partition.filter(lambda ((k, p), v): v[axis] < median)
     part2 = partition.filter(lambda ((k, p), v): v[axis] >= median).map(
         lambda ((k, p), v): ((k, next_part), v))
