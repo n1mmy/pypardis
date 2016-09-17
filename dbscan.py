@@ -70,7 +70,7 @@ class DBSCAN(object):
     """
 
     def __init__(self, eps=0.5, min_samples=5, metric=euclidean,
-                 max_partitions=None):
+                 max_partitions=None, split_method=None):
         """
         :type eps: float
         :param eps: nearest neighbor radius
@@ -83,6 +83,7 @@ class DBSCAN(object):
         :type max_partitions: int
         :param max_partitions: maximum number of partitions in
             KDPartitioner
+        :param split_method: split method for KDPartitioner
         Using a metric other than euclidian or cityblock/Manhattan may
         not work as the bounding boxes expand in such a way that
         other metrics may return distances less than eps for points
@@ -92,6 +93,7 @@ class DBSCAN(object):
         self.min_samples = int(min_samples)
         self.metric = metric
         self.max_partitions = max_partitions
+        self.split_method = None
         self.data = None
         self.result = None
         self.bounding_boxes = None
@@ -105,7 +107,8 @@ class DBSCAN(object):
         :param data: (key, k-dim vector like)
         Train the model using a (key, vector) RDD
         """
-        parts = KDPartitioner(data, self.max_partitions)
+        parts = KDPartitioner(data, self.max_partitions,
+                              split_method=self.split_method)
         self.data = data
         self.bounding_boxes = parts.bounding_boxes
         self.expanded_boxes = {}
