@@ -1,4 +1,5 @@
 import pyspark as ps
+import numpy as np
 import sklearn.cluster as skc
 from scipy.spatial.distance import *
 from partition import KDPartitioner
